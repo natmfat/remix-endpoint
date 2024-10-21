@@ -1,4 +1,4 @@
-import { INTENT } from "../constants";
+import { INTENT } from "../types";
 
 interface IntentProps<T> {
   value: T;

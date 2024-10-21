@@ -1,24 +1,21 @@
-/**
- * Easily create a 404 message
- * @returns 404 Response
- */
-export function notFound() {
-  return new Response(null, {
-    status: 404,
-    statusText: "not found",
-  });
-}
+import { type ZodTypeAny } from "zod";
+import { EndpointParameter } from "./endpoints/RemixEndpoint";
 
-/**
- * Easily create a server side error
- * @param statusText Any additional client side messages
- * @returns 500 Response
- */
-export function serverError(statusText: string = "internal server error") {
-  return new Response(null, {
-    status: 500,
-    statusText: statusText,
-  });
+export async function validate(
+  requestParameter: EndpointParameter,
+  schema: ZodTypeAny | undefined,
+  data: unknown,
+) {
+  if (!schema) {
+    return {};
+  }
+
+  const parsed = await schema.safeParseAsync(data);
+  if (!parsed.success) {
+    throw new Error(`Failed to validate ${requestParameter}`);
+  }
+
+  return parsed.data;
 }
 
 /**

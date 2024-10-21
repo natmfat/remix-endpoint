@@ -8,10 +8,16 @@ import {
 } from "@remix-run/node";
 import { ZodSchema, ZodTypeAny, z } from "zod";
 
-import { INTENT } from "./constants";
+import { ANY_REQUEST_METHOD, INTENT } from "./types";
 import { assertResponse, standardResponse } from "./utils";
 
-type RequestMethod = "DELETE" | "PATCH" | "POST" | "PUT" | "GET" | "ALL";
+type RequestMethod =
+  | "DELETE"
+  | "PATCH"
+  | "POST"
+  | "PUT"
+  | "GET"
+  | typeof ANY_REQUEST_METHOD;
 type RequestParameter = "headers" | "params" | "query" | "body" | "formData";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -132,8 +138,9 @@ export class RemixEndpoint {
       // verify intent method
       const action = this.actions[intent];
       assertResponse(
-        action.method === "ALL" || action.method === args.request.method,
-        "intent found, but does not match action builder request method",
+        action.method === ANY_REQUEST_METHOD ||
+          action.method === args.request.method,
+        `Invalid method ${args.request.method} for endpoint with intent ${intent}, expected ${action.method}`,
       );
 
       // validate everything
