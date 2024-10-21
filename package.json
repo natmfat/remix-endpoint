@@ -7,16 +7,16 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
-    "./components/*": {
-      "types": "./dist/components/*/index.d.ts",
-      "default": "./dist/components/*/index.js"
+    "./react/*": {
+      "types": "./dist/react/*.d.ts",
+      "default": "./dist/react/*.js"
     }
   },
   "files": [
     "dist"
   ],
+  "dev": "vite",
   "scripts": {
-    "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "pretty": "prettier --config prettier.config.cjs  --write .",

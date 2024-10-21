@@ -13,15 +13,20 @@ pnpm install remix-endpoint
 
 ## Usage
 
-```ts
+```tsx
 import { RemixAction } from "remix-endpoint";
+import { Intent } from "remix-endpoint/components/Intent";
 import { z } from "zod";
 import { zfd } from "zod-form-data";
+
+enum ActionIntent {
+  CREATE_OBJECT = "createObject"
+}
 
 export const action = new RemixAction()
   .register({
     method: "POST",
-    intent: "createObject",
+    intent: ActionIntent.CREATE_OBJECT,
     validate: {
       // if you wanted to validate body instead:
       // body: z.object({ name: z.string() })
@@ -37,4 +42,9 @@ export const action = new RemixAction()
     },
   })
   .create();
+
+// on the client:
+<Form>
+  <Intent value={ActionIntent.CREATE_OBJECT}>
+</Form>
 ```

@@ -11,6 +11,7 @@ export default defineConfig({
     tsconfigPaths(),
     react(),
     dts({
+      tsconfigPath: "./tsconfig.app.json",
       include: ["src"],
       exclude: ["node_modules/**"],
     }),
@@ -33,7 +34,7 @@ export default defineConfig({
       ],
       input: Object.fromEntries(
         glob
-          .sync(["src/components/**/!(*.d).{ts,tsx}", "src/index.ts"])
+          .sync(["src/react/**/!(*.d).{ts,tsx}", "src/index.ts"])
           .map((file) => [
             path.relative(
               "src",
