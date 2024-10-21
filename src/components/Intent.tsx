@@ -1,4 +1,4 @@
-import { INTENT } from "../types";
+import { INTENT } from "../endpoints/Router";
 
 interface IntentProps<T> {
   value: T;

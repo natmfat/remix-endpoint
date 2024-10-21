@@ -12,3 +12,29 @@ pnpm install remix-endpoint
 ```
 
 ## Usage
+
+```ts
+import { RemixAction } from "remix-endpoint";
+import { z } from "zod";
+import { zfd } from "zod-form-data";
+
+export const action = new RemixAction()
+  .register({
+    method: "POST",
+    intent: "createObject",
+    validate: {
+      // if you wanted to validate body instead:
+      // body: z.object({ name: z.string() })
+
+      // but remix forms are better:
+      formData: zfd.formData({
+        name: z.text(),
+      }),
+    },
+    handler: async ({ formData: { name } }) => {
+      await createObject(name);
+      return RemixAction.standardResponse(true, "Successfully created object!");
+    },
+  })
+  .create();
+```

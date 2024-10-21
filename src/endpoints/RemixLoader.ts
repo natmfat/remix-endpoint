@@ -1,12 +1,12 @@
 import { LoaderFunction, LoaderFunctionArgs } from "@remix-run/node";
-
-import { ANY_REQUEST_METHOD, DEFAULT_INTENT, INTENT } from "../types";
-import { assertResponse, standardResponse, validate } from "../utils";
 import {
+  ANY_REQUEST_METHOD,
   EndpointMethod as BaseEndpointMethod,
   EndpointValidation as BaseEndpointValidation,
-  RemixEndpoint,
-} from "./RemixEndpoint";
+  DEFAULT_INTENT,
+  INTENT,
+  Router,
+} from "./Router";
 
 type EndpointMethod = Extract<
   BaseEndpointMethod,
@@ -41,7 +41,7 @@ type RegisterEndpointArgs<H, P, Q> = {
   handler: EndpointHandler<H, P, Q, { request: Request }>;
 };
 
-export class RemixLoader extends RemixEndpoint<
+export class RemixLoader extends Router<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Endpoint<any, any, any, any>
 > {
@@ -50,7 +50,7 @@ export class RemixLoader extends RemixEndpoint<
     method = ANY_REQUEST_METHOD,
     validate = {},
     handler = () =>
-      standardResponse(false, "no handler was defined for this method"),
+      Router.standardResponse(false, "no handler was defined for this method"),
   }: RegisterEndpointArgs<H, P, Q>) {
     this.endpoints[intent] = {
       method,
@@ -74,7 +74,7 @@ export class RemixLoader extends RemixEndpoint<
         }
       } catch (error) {
         this.logError(error);
-        throw standardResponse(
+        throw Router.standardResponse(
           false,
           "Failed to retrieve request body or form data.",
         );
@@ -86,14 +86,14 @@ export class RemixLoader extends RemixEndpoint<
         rawFormData.get(INTENT) ||
         rawBody[INTENT] ||
         DEFAULT_INTENT;
-      assertResponse(
+      Router.assertResponse(
         intent && typeof intent === "string" && intent in this.endpoints,
         "Intent not provided.",
       );
 
       // verify intent method
       const endpoint = this.endpoints[intent];
-      assertResponse(
+      Router.assertResponse(
         endpoint.method === ANY_REQUEST_METHOD ||
           endpoint.method === args.request.method,
         `Invalid method ${args.request.method} for endpoint with intent ${intent}, expected ${endpoint.method}`,
@@ -103,13 +103,13 @@ export class RemixLoader extends RemixEndpoint<
       const schema = endpoint.validate || {};
       try {
         const [headers, params, query] = await Promise.all([
-          validate(
+          Router.validate(
             "headers",
             schema.headers,
             Object.fromEntries(args.request.headers),
           ),
-          validate("params", schema.params, args.params),
-          validate("query", schema.query, url.searchParams),
+          Router.validate("params", schema.params, args.params),
+          Router.validate("query", schema.query, url.searchParams),
         ]);
 
         return endpoint.handler({
@@ -120,7 +120,7 @@ export class RemixLoader extends RemixEndpoint<
         });
       } catch (error) {
         this.logError(error);
-        throw standardResponse(false, "Failed to execute endpoint.");
+        throw Router.standardResponse(false, "Failed to execute endpoint.");
       }
     };
 
