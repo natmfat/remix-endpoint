@@ -4,7 +4,7 @@ export const INTENT = "intent" as const;
 
 export const DEFAULT_INTENT = "default" as const;
 
-export const ANY_REQUEST_METHOD = "ANY" as const;
+export const ANY_ENDPOINT_METHOD = "ANY" as const;
 
 export type EndpointParameter =
   | "headers"
@@ -19,7 +19,7 @@ export type EndpointMethod =
   | "POST"
   | "PUT"
   | "GET"
-  | typeof ANY_REQUEST_METHOD;
+  | typeof ANY_ENDPOINT_METHOD;
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export type EndpointValidation<Headers, Params, Query, Body, FormData> = {

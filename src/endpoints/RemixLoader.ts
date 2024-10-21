@@ -1,6 +1,6 @@
 import { LoaderFunction, LoaderFunctionArgs } from "@remix-run/node";
 import {
-  ANY_REQUEST_METHOD,
+  ANY_ENDPOINT_METHOD,
   EndpointMethod as BaseEndpointMethod,
   EndpointValidation as BaseEndpointValidation,
   DEFAULT_INTENT,
@@ -10,7 +10,7 @@ import {
 
 type EndpointMethod = Extract<
   BaseEndpointMethod,
-  "GET" | typeof ANY_REQUEST_METHOD
+  "GET" | typeof ANY_ENDPOINT_METHOD
 >;
 
 type EndpointValidation<Headers, Params, Query> = Omit<
@@ -47,7 +47,7 @@ export class RemixLoader extends Router<
 > {
   register<H, P, Q>({
     intent = DEFAULT_INTENT,
-    method = ANY_REQUEST_METHOD,
+    method = ANY_ENDPOINT_METHOD,
     validate = {},
     handler = () =>
       Router.standardResponse(false, "no handler was defined for this method"),
@@ -94,7 +94,7 @@ export class RemixLoader extends Router<
       // verify intent method
       const endpoint = this.endpoints[intent];
       Router.assertResponse(
-        endpoint.method === ANY_REQUEST_METHOD ||
+        endpoint.method === ANY_ENDPOINT_METHOD ||
           endpoint.method === args.request.method,
         `Invalid method ${args.request.method} for endpoint with intent ${intent}, expected ${endpoint.method}`,
       );
