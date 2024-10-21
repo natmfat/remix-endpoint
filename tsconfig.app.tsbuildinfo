@@ -1,0 +1,1 @@
+{"root":["./src/index.ts","./src/types.ts","./src/utils.ts","./src/vite-env.d.ts","./src/components/intent.tsx","./src/endpoints/remixaction.ts","./src/endpoints/remixendpoint.ts","./src/endpoints/remixloader.ts"],"version":"5.6.3"}

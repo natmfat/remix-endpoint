@@ -33,7 +33,7 @@ export default defineConfig({
       ],
       input: Object.fromEntries(
         glob
-          .sync(["src/**/!(*.d).{ts,tsx}"])
+          .sync(["src/components/**/!(*.d).{ts,tsx}", "src/index.ts"])
           .map((file) => [
             path.relative(
               "src",

@@ -41,7 +41,7 @@ type RegisterEndpointArgs<H, P, Q> = {
   handler: EndpointHandler<H, P, Q, { request: Request }>;
 };
 
-export class RemixAction extends RemixEndpoint<
+export class RemixLoader extends RemixEndpoint<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Endpoint<any, any, any, any>
 > {
