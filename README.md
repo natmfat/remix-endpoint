@@ -14,14 +14,17 @@ pnpm install remix-endpoint
 ## Usage
 
 ```tsx
-import { RemixAction } from "remix-endpoint";
-import { Intent } from "remix-endpoint/components/Intent";
-import { z } from "zod";
+import { RemixAction, Router } from "remix-endpoint";
+import { createIntent } from "remix-endpoint/react/createIntent";
 import { zfd } from "zod-form-data";
+import { z } from "zod";
 
 enum ActionIntent {
   CREATE_OBJECT = "createObject"
 }
+
+// alternatively, just import from react/Intent (but this only uses strings)
+const Intent = createIntent<ActionIntent>();
 
 export const action = new RemixAction()
   .register({
@@ -38,12 +41,12 @@ export const action = new RemixAction()
     },
     handler: async ({ formData: { name } }) => {
       await createObject(name);
-      return RemixAction.standardResponse(true, "Successfully created object!");
+      return Router.standardResponse(true, "Successfully created object!");
     },
   })
   .create();
 
-// on the client:
+
 <Form>
   <Intent value={ActionIntent.CREATE_OBJECT}>
 </Form>
