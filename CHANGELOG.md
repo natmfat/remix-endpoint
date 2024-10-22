@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.4](https://github.com/natmfat/remix-endpoint/compare/v0.0.3...v0.0.4) (2024-10-22)
+
+
+### Features
+
+* more exports, docs ([6a8d3e8](https://github.com/natmfat/remix-endpoint/commit/6a8d3e89c4d45d91818b8174779fffd0cfdc3df1))
+
 ## [0.0.3](https://github.com/natmfat/remix-endpoint/compare/v0.0.2...v0.0.3) (2024-10-21)
 
 
