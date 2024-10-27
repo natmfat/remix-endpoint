@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [0.0.5](https://github.com/natmfat/remix-endpoint/compare/v0.0.4...v0.0.5) (2024-10-27)
+
+
+### Bug Fixes
+
+* loaders can't use form data or body ([8e92193](https://github.com/natmfat/remix-endpoint/commit/8e9219334ab4563361732a86caca8b79b2051ffc))
+
 ## [0.0.4](https://github.com/natmfat/remix-endpoint/compare/v0.0.3...v0.0.4) (2024-10-22)
 
 
