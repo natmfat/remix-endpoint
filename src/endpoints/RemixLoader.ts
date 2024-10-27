@@ -64,28 +64,9 @@ export class RemixLoader extends Router<
     const action = async (args: LoaderFunctionArgs) => {
       // get intent from url search params or form data
       const url = new URL(args.request.url);
-      let rawFormData: FormData = new FormData();
-      let rawBody: Record<string, unknown> = {};
-      try {
-        if (args.request.headers.get("Content-Type") === "application/json") {
-          rawBody = await args.request.json();
-        } else {
-          rawFormData = await args.request.formData();
-        }
-      } catch (error) {
-        this.logError(error);
-        throw Router.standardResponse(
-          false,
-          "Failed to retrieve request body or form data.",
-        );
-      }
 
       // verify intent
-      const intent =
-        url.searchParams.get(INTENT) ||
-        rawFormData.get(INTENT) ||
-        rawBody[INTENT] ||
-        DEFAULT_INTENT;
+      const intent = url.searchParams.get(INTENT) || DEFAULT_INTENT;
       Router.assertResponse(
         intent && typeof intent === "string" && intent in this.endpoints,
         "Intent not provided.",
